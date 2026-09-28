@@ -1,0 +1,1344 @@
+/* =========================================================
+   Expense Tracker — stylesheet
+
+   1.  Tokens & base
+   2.  Buttons & forms
+   3.  Auth pages
+   4.  App layout
+   5.  Sidebar (desktop / tablet / mobile)
+   6.  Page header & shared components
+   7.  Dashboard
+   8.  Transactions
+   9.  Budgets
+   10. Reports
+   11. Categories
+   12. Profile
+========================================================= */
+
+
+/* =========================
+   1. Tokens & base
+========================= */
+
+:root {
+    --primary: #2e7ae6;
+    --primary-dark: #2366c8;
+    --primary-soft: #eaf2fd;
+
+    --background: #f6f7f9;
+    --surface: #ffffff;
+    --surface-alt: #f3f5f8;
+
+    --text: #1b2333;
+    --muted: #6b7587;
+    --border: #e3e7ee;
+
+    --success: #177a4a;
+    --success-soft: #e8f6ee;
+    --danger: #cf3040;
+    --danger-soft: #fdeff0;
+
+    --radius: 8px;
+    --radius-sm: 6px;
+
+    --sidebar-width: 232px;
+    --sidebar-rail: 68px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    background: var(--background);
+    color: var(--text);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+strong {
+    font-variant-numeric: tabular-nums;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/* =========================
+   2. Buttons & forms
+========================= */
+
+.btn-primary,
+.btn-primary-small,
+.add-button,
+.report-filter button {
+    display: inline-block;
+    border: none;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+.btn-primary:hover,
+.btn-primary-small:hover,
+.add-button:hover,
+.report-filter button:hover {
+    background: var(--primary-dark);
+    text-decoration: none;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.btn-primary-small,
+.add-button,
+.report-filter button {
+    padding: 10px 16px;
+}
+
+.cancel-button {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.cancel-button:hover {
+    background: var(--surface-alt);
+    text-decoration: none;
+}
+
+.form-section {
+    max-width: 640px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 16px;
+}
+
+.form-section h2 {
+    font-size: 18px;
+}
+
+.form-description {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 2px 0 18px;
+}
+
+.transaction-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.filter-group input,
+.filter-group select,
+.report-filter-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.filter-group input:focus,
+.filter-group select:focus,
+.report-filter-group select:focus {
+    border-color: var(--primary);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.form-actions .btn-primary {
+    width: auto;
+    margin-top: 0;
+    padding: 10px 18px;
+    font-size: 14px;
+}
+
+.error-message,
+.success-message,
+.system-message {
+    padding: 11px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.error-message,
+.system-message.error {
+    background: var(--danger-soft);
+    color: var(--danger);
+    border-color: #f2c6ca;
+}
+
+.success-message,
+.system-message.success {
+    background: var(--success-soft);
+    color: var(--success);
+    border-color: #bfe3cf;
+}
+
+
+/* =========================
+   3. Auth pages
+========================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.auth-page .logo img {
+    display: block;
+    height: 48px;
+    width: auto;
+    max-width: 220px;
+    margin: 0 auto 18px;
+    object-fit: contain;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.auth-card h1 {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.muted {
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-card label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+}
+
+.auth-card input:focus {
+    border-color: var(--primary);
+}
+
+.auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+
+/* =========================
+   4. App layout
+========================= */
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 1240px;
+    padding: 24px 28px 32px;
+}
+
+
+/* =========================
+   5. Sidebar
+========================= */
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    flex-shrink: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 12px 14px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+}
+
+/* Logo */
+
+.sidebar-logo {
+    display: block;
+    padding: 4px 8px;
+    margin-bottom: 22px;
+}
+
+.sidebar-logo img {
+    display: block;
+    height: 40px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Navigation */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-nav a,
+.sidebar-logout {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.sidebar-nav a:hover,
+.sidebar-logout:hover {
+    background: var(--surface-alt);
+    text-decoration: none;
+}
+
+.sidebar-nav a.active {
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.sidebar svg,
+.mobile-menu-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Bottom: profile + logout */
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--text);
+}
+
+.sidebar-profile:hover {
+    background: var(--surface-alt);
+    text-decoration: none;
+}
+
+.sidebar-profile.active {
+    background: var(--primary-soft);
+}
+
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.3;
+}
+
+.profile-info strong {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-info span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.sidebar-logout {
+    color: var(--muted);
+}
+
+.sidebar-logout:hover {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+/* Mobile top bar & overlay: hidden until needed */
+
+.mobile-bar,
+.sidebar-overlay {
+    display: none;
+}
+
+.mobile-bar {
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.mobile-bar-logo img {
+    display: block;
+    height: 30px;
+    width: auto;
+}
+
+.mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.mobile-menu-btn:hover {
+    background: var(--surface-alt);
+}
+
+/* Tablet: icon rail */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+    .sidebar {
+        width: var(--sidebar-rail);
+        padding: 14px 10px;
+        align-items: center;
+    }
+
+    .sidebar-logo {
+        padding: 0;
+        margin-bottom: 18px;
+    }
+
+    .sidebar-logo img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .sidebar-nav {
+        width: 100%;
+    }
+
+    .sidebar-nav a,
+    .sidebar-logout,
+    .sidebar-profile {
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .nav-label,
+    .profile-info {
+        display: none;
+    }
+
+    .sidebar-bottom {
+        width: 100%;
+    }
+
+    .main-content {
+        padding: 22px 22px 28px;
+    }
+}
+
+/* Mobile: off-canvas drawer */
+
+@media (max-width: 767px) {
+
+    .app-layout {
+        display: block;
+    }
+
+    .mobile-bar {
+        display: flex;
+        position: sticky;
+        top: 0;
+        z-index: 30;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 260px;
+        max-width: 85vw;
+        height: 100%;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+    }
+
+    body.sidebar-open .sidebar {
+        transform: none;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: rgba(20, 28, 45, 0.4);
+    }
+
+    body.sidebar-open .sidebar-overlay {
+        display: block;
+    }
+
+    body.sidebar-open {
+        overflow: hidden;
+    }
+
+    .main-content {
+        padding: 18px 16px 28px;
+    }
+}
+
+
+/* =========================
+   6. Page header & shared components
+========================= */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.topbar h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.topbar p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.dashboard-section,
+.reports-section,
+.category-form,
+.category-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.section-header h2,
+.reports-section h2,
+.category-card h2,
+.category-form h2 {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.section-header p,
+.reports-section-subtitle {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.table-action {
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.delete-action,
+.delete-button {
+    color: var(--danger);
+    font-size: 13px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 36px 16px;
+}
+
+.empty-state h3 {
+    margin-bottom: 4px;
+}
+
+.empty-state p {
+    color: var(--muted);
+    margin-bottom: 16px;
+}
+
+.empty-message,
+.reports-empty {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.reports-empty {
+    margin-top: 14px;
+}
+
+.income-text,
+.overview-income {
+    color: var(--success);
+}
+
+.expense-text,
+.overview-expense {
+    color: var(--danger);
+}
+
+/* Progress bars (shared by dashboard, budgets, reports) */
+
+.budget-progress,
+.category-progress,
+.category-bar,
+.report-budget-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9edf3;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.budget-progress-bar,
+.category-progress-bar,
+.category-fill,
+.report-budget-bar div {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 999px;
+}
+
+.budget-progress-bar.over-budget,
+.report-budget-bar div.over {
+    background: var(--danger);
+}
+
+.budget-percentage,
+.report-budget-text {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.budget-warning,
+.budget-danger,
+.budget-over {
+    color: var(--danger);
+}
+
+.budget-warning {
+    font-weight: 600;
+}
+
+.budget-success,
+.budget-ok {
+    color: var(--success);
+}
+
+
+/* =========================
+   7. Dashboard
+========================= */
+
+.time-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.time-summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+.dashboard-section .time-summary-card {
+    background: var(--surface-alt);
+    border: none;
+}
+
+.time-summary-card span,
+.summary-card span,
+.reports-card span {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.time-summary-card strong {
+    font-size: 18px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.summary-card {
+    background: var(--surface-alt);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+.summary-card strong {
+    font-size: 20px;
+}
+
+.monthly-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.overview-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px;
+    background: var(--surface-alt);
+    border-radius: var(--radius);
+}
+
+.overview-item span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.overview-item strong {
+    font-size: 17px;
+}
+
+.dashboard-budget-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.category-item-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Tables (dashboard + transactions) */
+
+.transaction-table {
+    overflow-x: auto;
+}
+
+.transaction-table table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+}
+
+.transaction-table th,
+.transaction-table td {
+    padding: 11px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+.transaction-table th {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.transaction-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.transaction-table tbody tr:hover {
+    background: #fafbfc;
+}
+
+.income-label,
+.expense-label {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.income-label {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.expense-label {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+
+/* =========================
+   8. Transactions (filters)
+========================= */
+
+.filter-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.filter-form {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filter-group label,
+.report-filter-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.filter-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* =========================
+   9. Budgets
+========================= */
+
+.budget-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.budget-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    background: var(--surface);
+}
+
+.budget-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.budget-card-header h3 {
+    font-size: 16px;
+}
+
+.budget-card-header p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.budget-actions {
+    white-space: nowrap;
+}
+
+.budget-actions .table-action:last-child {
+    margin-right: 0;
+}
+
+.budget-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.budget-numbers div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.budget-numbers span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.budget-numbers strong {
+    font-size: 14px;
+}
+
+
+/* =========================
+   10. Reports
+========================= */
+
+.report-filter {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.report-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.report-filter-group select {
+    min-width: 140px;
+}
+
+.reports-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.reports-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+}
+
+.reports-card strong {
+    display: block;
+    font-size: 20px;
+}
+
+.budget-report-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.budget-report-grid div {
+    background: var(--surface-alt);
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+}
+
+.budget-report-grid span {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.budget-report-grid strong {
+    font-size: 16px;
+}
+
+.report-budget-bar {
+    margin-top: 18px;
+}
+
+.category-row {
+    margin-top: 16px;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.percentage {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin-top: 16px;
+}
+
+
+/* =========================
+   11. Categories
+========================= */
+
+.category-form .form-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.category-form .form-group {
+    flex: 1;
+}
+
+.category-form .add-button {
+    flex-shrink: 0;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.category-card h2 {
+    margin-bottom: 6px;
+}
+
+.category-card .category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.category-card .category-item:last-of-type {
+    border-bottom: none;
+}
+
+
+/* =========================
+   12. Profile
+========================= */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-card-avatar {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.profile-card-details h2 {
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+.profile-card-details p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.detail-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.detail-list > div {
+    padding: 12px 14px;
+    background: var(--surface-alt);
+    border-radius: var(--radius-sm);
+}
+
+.detail-list dt {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.detail-list dd {
+    font-size: 15px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.detail-list-compact {
+    margin-top: 12px;
+}
+
+
+/* =========================
+   Responsive: content
+========================= */
+
+@media (max-width: 1100px) {
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .time-summary-grid,
+    .monthly-overview-grid,
+    .filter-form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .budget-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .reports-summary,
+    .budget-report-grid,
+    .summary-grid,
+    .category-grid,
+    .detail-list {
+        grid-template-columns: 1fr;
+    }
+
+    .report-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .report-filter-group select {
+        width: 100%;
+    }
+
+    .category-form .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .category-form .add-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .time-summary-grid,
+    .monthly-overview-grid,
+    .filter-form,
+    .form-row,
+    .budget-numbers {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-buttons {
+        width: 100%;
+    }
+
+    .topbar {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .topbar h1 {
+        font-size: 22px;
+    }
+
+    .budget-card-header {
+        flex-direction: column;
+    }
+
+    .form-actions {
+        flex-wrap: wrap;
+    }
+
+    .dashboard-section,
+    .reports-section,
+    .category-form,
+    .category-card,
+    .form-section {
+        padding: 16px;
+    }
+}
